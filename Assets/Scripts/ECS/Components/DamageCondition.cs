@@ -1,8 +1,8 @@
 ﻿namespace ECS.Tanks
 {
-    public static class DamageCondition
+    public enum DamageCondition : int
     {
-        public const int DAMAGE = 0;
-        public const int DEAD = 1;
+        DAMAGE = 0,
+        DEAD = 1,
     }
 }

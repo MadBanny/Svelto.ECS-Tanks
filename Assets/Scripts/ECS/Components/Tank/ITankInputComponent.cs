@@ -3,6 +3,9 @@
     public interface ITankInputComponent : IComponent
     {
         UnityEngine.Vector3 Input { get; set; }
-        bool Fire { get; set; }
+        bool GetFireButton { get; set; }
+        bool GetFireButtonDown { get; set; }
+        bool GetFireButtonUp { get; set; }
+        bool Fired { get; set; }
     }
 }

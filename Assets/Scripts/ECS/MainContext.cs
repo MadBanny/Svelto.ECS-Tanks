@@ -87,28 +87,18 @@ namespace ECS.Tanks
             damageSequence.SetSequence(
                 new Steps
                 {
-                    {
-                        shellDamageEngine,
-                        new To
-                        {
+                    {shellDamageEngine,
+                        new To{
                             new IStep[] { healthEngine }
                         }
                     },
-                    {
-                        healthEngine,
-                        new To
-                        {
-                            {
-                                DamageCondition.DAMAGE, new IStep[] 
-                                {
-                                    tankHudEngine
-                                }
+                    {healthEngine,
+                        new To{
+                            { (int)DamageCondition.DAMAGE,
+                                new IStep[] {tankHudEngine}
                             },
-                            {
-                                DamageCondition.DEAD, new IStep[] 
-                                {
-                                    tankMovementEngine
-                                }
+                            { (int)DamageCondition.DEAD,
+                                new IStep[] {tankMovementEngine}
                             }
                         }
                     }
@@ -119,7 +109,7 @@ namespace ECS.Tanks
         private void SetupCamera(UnityContext contextHolder)
         {
             CameraEntityDescriptorHolder cameraEntityDescriptor = contextHolder.GetComponentInChildren<CameraEntityDescriptorHolder>();
-            IEntityDescriptorInfo entityDescriptor = cameraEntityDescriptor.RetrieveDescriptor();
+            EntityDescriptorInfo entityDescriptor = cameraEntityDescriptor.RetrieveDescriptor();
             _EntityFactory.BuildEntity(
                 cameraEntityDescriptor.gameObject.GetInstanceID(),
                 entityDescriptor,

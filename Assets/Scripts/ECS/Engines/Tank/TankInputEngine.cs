@@ -37,10 +37,13 @@ namespace ECS.Tanks.Tank
                         float verticalAxis = Input.GetAxis("Vertical" + tankNumber);
 
                         tankInput.Input = new Vector3(horizontalAxis, 0f, verticalAxis);
-                        tankInput.Fire = Input.GetButtonDown("Fire" + tankNumber);
+
+                        string fireButtonName = "Fire" + tankNumber;
+                        tankInput.GetFireButton = Input.GetButton(fireButtonName);
+                        tankInput.GetFireButtonDown = Input.GetButtonDown(fireButtonName);
+                        tankInput.GetFireButtonUp = Input.GetButtonUp(fireButtonName);
                     }
                 }
-                //_TankEntityView.TankInputComponent.Fire = Input.GetButton("Fire1");
 
                 yield return null;
             }

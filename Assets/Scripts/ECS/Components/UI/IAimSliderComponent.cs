@@ -4,6 +4,6 @@ namespace ECS.Tanks.UI
 {
     public interface IAimSliderComponent : IComponent
     {
-        //Slider Slider { get; }
+        float AimSliderValue { set; }
     }
 }

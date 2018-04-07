@@ -9,7 +9,7 @@ namespace ECS.Tanks.UI
         public Slider HealthSlider { get; private set; }
         public Image FillImage;
 
-        public int Value
+        public float HealthSliderValue
         {
             set { HealthSlider.value = value; }
         }

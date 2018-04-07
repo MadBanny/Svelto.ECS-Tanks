@@ -6,6 +6,6 @@ namespace ECS.Tanks
 {
     public interface IColorComponent : IComponent
     {
-        Color Color { get; set; }
+        Color Color { set; }
     }
 }

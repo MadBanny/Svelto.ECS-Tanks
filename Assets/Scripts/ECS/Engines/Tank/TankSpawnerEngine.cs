@@ -40,7 +40,6 @@ namespace ECS.Tanks.Tank
                 //!!!
                 TankColorImplementor colorImplementor = tank.GetComponentInChildren<TankColorImplementor>();
                 colorImplementor.Color = spawnDataSource.SpawnData[i].TankColor;
-                colorImplementor.SetColor();
 
                 tank.GetComponents(implementors);
                 implementors.Add(colorImplementor);
@@ -56,9 +55,6 @@ namespace ECS.Tanks.Tank
                 //Build tank HUD
                 TankHudImplementor hudImplementor = tank.GetComponentInChildren<TankHudImplementor>();
                 _EntityFactory.BuildEntity<TankHudEntityDescriptor>(hudImplementor.GetInstanceID(), new object[] { hudImplementor });
-                /*TankHudEntityDescriptorHolder hudEntityHolder = tank.GetComponentInChildren<TankHudEntityDescriptorHolder>();
-                IEntityDescriptorInfo hudEntityDescriptor = hudEntityHolder.RetrieveDescriptor();
-                _EntityFactory.BuildEntity(hudEntityHolder.GetInstanceID(), hudEntityDescriptor, hudEntityHolder.GetComponentsInChildren<IImplementor>());*/
 
             }
         }

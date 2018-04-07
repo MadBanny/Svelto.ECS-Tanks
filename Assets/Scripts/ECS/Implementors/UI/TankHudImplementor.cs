@@ -11,7 +11,8 @@ namespace ECS.Tanks.UI
 
         public Slider AimSlider;
 
-        public int Value { set { HealthSlider.value = value; } }
+        public float HealthSliderValue { set { HealthSlider.value = value; } }
+        public float AimSliderValue { set { AimSlider.value = value; } }
         public Color FillImageColor { set { HealthFillImage.color = value; } }
         
     }

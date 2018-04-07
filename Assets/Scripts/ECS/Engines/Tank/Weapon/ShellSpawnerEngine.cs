@@ -41,17 +41,48 @@ namespace ECS.Tanks.Tank
                     {
                         TankWeaponEntityView tankWeaponEntityView = tankWeaponEntityViews[i];
                         TankEntityView tankEntityView = tankEntityViews[i];
-                        if (tankEntityView.TankInputComponent.Fire)
-                        {
-                            GameObject go = _GameObjectFactory.Build(_ShellPrefab);
-                            go.transform.position = tankWeaponEntityView.PositionComponent.Position;
-
-                            _EntityFactory.BuildEntity<ShellEntityDescriptor>(go.GetInstanceID(), new object[] { });
-                        }
+                        Charge(tankEntityView.TankInputComponent,tankWeaponEntityView.TransformComponent, tankWeaponEntityView.LaunchForceComponent, _Time);
                     }
                 }
                 yield return null;
             }
+        }
+
+        private void Charge(ITankInputComponent input,ITransformComponent transform, ILaunchForceComponent launchForce, ITime time)
+        {
+            float chargeSpeed = (launchForce.MaxLaunchForce - launchForce.MinLaunchForce) / launchForce.MaxChargeTime;
+
+            if (launchForce.CurrentLaunchForce >= launchForce.MaxLaunchForce && !input.Fired)
+            {
+                launchForce.CurrentLaunchForce = launchForce.MaxLaunchForce;
+                Fire(transform, launchForce.CurrentLaunchForce);
+                input.Fired = true;
+                launchForce.CurrentLaunchForce = launchForce.MinLaunchForce;
+            }
+            else if (input.GetFireButtonDown)
+            {
+                input.Fired = false;
+                launchForce.CurrentLaunchForce = launchForce.MinLaunchForce;
+            }
+            else if (input.GetFireButton && !input.Fired)
+            {
+                launchForce.CurrentLaunchForce += chargeSpeed * time.DeltaTime;
+            }
+            else if (input.GetFireButtonUp && !input.Fired)
+            {
+                Fire(transform, launchForce.CurrentLaunchForce);
+                input.Fired = true;
+                launchForce.CurrentLaunchForce = launchForce.MinLaunchForce;
+            }
+        }
+
+        private void Fire(ITransformComponent transform, float lauchForce)
+        {
+            GameObject go = _GameObjectFactory.Build(_ShellPrefab);
+            go.transform.position = transform.Position;
+            go.transform.rotation = transform.Rotation;
+            go.GetComponent<Rigidbody>().velocity = lauchForce * transform.Forward;
+            _EntityFactory.BuildEntity<ShellEntityDescriptor>(go.GetInstanceID(), new object[] { });
         }
     }
 }

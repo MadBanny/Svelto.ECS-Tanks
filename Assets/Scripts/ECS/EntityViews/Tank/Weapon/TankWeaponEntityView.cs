@@ -5,6 +5,7 @@ namespace ECS.Tanks.Tank
 {
     public class TankWeaponEntityView : EntityView
     {
-        public IPositionComponent PositionComponent;
+        public ITransformComponent TransformComponent;
+        public ILaunchForceComponent LaunchForceComponent;
     }
 }

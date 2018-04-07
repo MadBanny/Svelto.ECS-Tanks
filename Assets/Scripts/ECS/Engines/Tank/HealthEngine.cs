@@ -28,9 +28,9 @@ namespace ECS.Tanks.Tank
             //the HealthEngine can branch the sequencer flow triggering two different
             //conditions
             if (healthComponent.CurrentHealth <= 0)
-                _DamageSequence.Next(this, ref damage, DamageCondition.DEAD);
+                _DamageSequence.Next(this, ref damage, (int)DamageCondition.DEAD);
             else
-                _DamageSequence.Next(this, ref damage, DamageCondition.DAMAGE);
+                _DamageSequence.Next(this, ref damage, (int)DamageCondition.DAMAGE);
         }
     }
 }

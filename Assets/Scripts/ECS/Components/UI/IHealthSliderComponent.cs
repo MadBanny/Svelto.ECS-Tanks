@@ -5,7 +5,7 @@ namespace ECS.Tanks.UI
 {
     public interface IHealthSliderComponent : IComponent
     {
-        int Value { set; }
+        float HealthSliderValue { set; }
         Color FillImageColor { set; }
     }
 }

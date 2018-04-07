@@ -22,6 +22,8 @@ namespace ECS.Tanks.UI
             {
                 var tankHudEntityViews = entityViewsDB.QueryEntityViews<TankHudEntityView>();
                 var hudDamageEntityViews = entityViewsDB.QueryEntityViews<HudDamageEntityView>();
+                var tankWeaponEntityViews = entityViewsDB.QueryEntityViews<TankWeaponEntityView>();
+                var tankEntityViews = entityViewsDB.QueryEntityViews<TankEntityView>();
 
                 if(tankHudEntityViews.Count > 0)
                 {
@@ -30,13 +32,24 @@ namespace ECS.Tanks.UI
                         HudDamageEntityView hudDamageEntityView = hudDamageEntityViews[i];
                         TankHudEntityView tankHudEntityView = tankHudEntityViews[i];
                         IHealthSliderComponent healthSlider = tankHudEntityView.HealthSliderComponent;
+                        IAimSliderComponent aimSlider = tankHudEntityView.AimSliderComponent;
 
-                        healthSlider.Value = hudDamageEntityView.HealthComponent.CurrentHealth;
+                        healthSlider.HealthSliderValue = hudDamageEntityView.HealthComponent.CurrentHealth;
                         healthSlider.FillImageColor = Color.Lerp(Color.red, Color.green, hudDamageEntityView.HealthComponent.CurrentHealth / 100);
                         //healthSlider.FillImageColor = Color.Lerp(Color.red, Color.green, m_CurrentHealth / m_StartingHealth);
+                        Charge(tankWeaponEntityViews[i].LaunchForceComponent,tankEntityViews[i].TankInputComponent, aimSlider);
                     }
                 }
                 yield return null;
+            }
+        }
+
+        private void Charge(ILaunchForceComponent launchForce,ITankInputComponent tankInput, IAimSliderComponent aimSlider)
+        {
+            aimSlider.AimSliderValue = launchForce.MinLaunchForce;
+            if (tankInput.GetFireButton && !tankInput.Fired)
+            {
+                aimSlider.AimSliderValue = launchForce.CurrentLaunchForce;
             }
         }
 
